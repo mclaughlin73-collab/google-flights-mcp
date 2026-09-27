@@ -147,7 +147,7 @@ const startHttp = async (): Promise<void> => {
     const server = new McpServer({ name: "google-flights", version: "1.0.0" });
     registerTools(server);
 
-        const transport = new StreamableHTTPServerTransport({
+    const transport = new StreamableHTTPServerTransport({
       sessionIdGenerator: () => randomUUID(),
       onsessioninitialized: (sid) => {
         sessions.set(sid, { server, transport });
@@ -162,6 +162,7 @@ const startHttp = async (): Promise<void> => {
     await server.connect(transport);
 
     await transport.handleRequest(req, res, req.body);
+  });
 
   app.get("/mcp", async (req, res) => {
     const sessionId = req.headers["mcp-session-id"] as string | undefined;
